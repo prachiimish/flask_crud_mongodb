@@ -1,0 +1,20 @@
+version: '3.8'  # Defines the version of Docker Compose
+
+services:
+  app:
+    build: .
+    command: python run.py  # Command to run the Flask application
+    volumes:
+      - .:/app  # Mounts the current directory to /app in the container
+    ports:
+      - "5000:5000"  # Exposes port 5000 for the Flask app
+    environment:
+      MONGO_URI: mongodb://mongo:27017/usersdb  # MongoDB URI for the app
+
+  mongo:
+    image: mongo:latest  # Using the official MongoDB image
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root  # MongoDB root username
+      MONGO_INITDB_ROOT_PASSWORD: password  # MongoDB root password
+    ports:
+      - "27017:27017"  # Exposes port 27017 for MongoDB
